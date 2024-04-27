@@ -1,0 +1,12 @@
+apache-airflow==2.9.0
+boto3==1.34.75
+boto3==1.34.91
+pandas==2.0.3
+pandas_gbq==0.21.0
+pandas_gbq==0.22.0
+protobuf==4.25.3
+Requests==2.31.0
+SQLAlchemy==1.4.39
+SQLAlchemy==2.0.25
+SQLAlchemy==1.4.51
+SQLAlchemy==2.0.29
