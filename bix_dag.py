@@ -60,7 +60,7 @@ def extract_api_employees():
     employees_csv = df_employees.to_csv(index=False)
     s3 = boto3.client('s3')
     bucket_name = "staging-bix-test"
-    s3.put_object(Body=employees_csv.encode('utf-8'), Bucket=bucket_name, Key=f"employees/employees_{datetime.today().strftime('%m-%d-%Y')}.csv")
+    s3.put_object(Body=employees_csv.encode('utf-8'), Bucket=bucket_name, Key=f"employees/{datetime.today().strftime('%m-%d-%Y')}/employees_.csv")
 
     logging.info("Data uploaded to S3 bucket")
 
@@ -80,7 +80,7 @@ def extract_sql_sales():
 
     s3 = boto3.client('s3')
     bucket_name = "staging-bix-test"
-    s3.put_object(Body=sales_csv.encode('utf-8'), Bucket=bucket_name, Key=f"sales/sales_{datetime.today().strftime('%m-%d-%Y')}.csv")
+    s3.put_object(Body=sales_csv.encode('utf-8'), Bucket=bucket_name, Key=f"sales/{datetime.today().strftime('%m-%d-%Y')}/sales_.csv")
 
     logging.info("Data uploaded to S3 bucket")
 
@@ -99,7 +99,7 @@ def extract_parquet_categories():
 
     s3 = boto3.client('s3')
     bucket_name = "staging-bix-test"
-    s3.put_object(Body=categories_csv.encode('utf-8'), Bucket=bucket_name, Key=f"categories/categories_{datetime.today().strftime('%m-%d-%Y')}.csv")
+    s3.put_object(Body=categories_csv.encode('utf-8'), Bucket=bucket_name, Key=f"categories/{datetime.today().strftime('%m-%d-%Y')}/categories_.csv")
 
     logging.info("Data uploaded to S3 bucket")
 
@@ -111,9 +111,9 @@ def join_dfs():
     """
     logging.info("executando junção das tabelas")
 
-    employees_csv_path = f"employees/employees_{datetime.today().strftime('%m-%d-%Y')}.csv"
-    categories_csv_path = f"categories/categories_{datetime.today().strftime('%m-%d-%Y')}.csv"
-    sales_csv_path = f"sales/sales_{datetime.today().strftime('%m-%d-%Y')}.csv"
+    employees_csv_path = f"employees/{datetime.today().strftime('%m-%d-%Y')}/employees_.csv"
+    categories_csv_path = f"categories/{datetime.today().strftime('%m-%d-%Y')}/categories_.csv"
+    sales_csv_path = f"sales/{datetime.today().strftime('%m-%d-%Y')}/sales_.csv"
 
     s3 = boto3.client('s3')
     bucket_name = "staging-bix-test"
@@ -141,7 +141,7 @@ def join_dfs():
 
     df_joined = df_joined.drop(columns=['id', 'id_funcionario', 'id_categoria'], axis=1)
 
-    joined_df_csv_path = f"joined/joined_{datetime.today().strftime('%m-%d-%Y')}.csv"
+    joined_df_csv_path = f"joined/{datetime.today().strftime('%m-%d-%Y')}/joined_.csv"
 
     joined_df_csv = df_joined.to_csv(index=False)
 
@@ -154,7 +154,7 @@ def load_df_bq():
     """
     logging.info("carregando tabela unificada para bigquery")
 
-    joined_csv_path = f"joined/joined_{datetime.today().strftime('%m-%d-%Y')}.csv"
+    joined_csv_path = f"joined/{datetime.today().strftime('%m-%d-%Y')}/joined_.csv"
 
     s3 = boto3.client('s3')
     bucket_name = "staging-bix-test"
@@ -171,8 +171,9 @@ def load_df_bq():
 
     print(f"Data loaded to BigQuery table: {table_ref.table_id}")
 
+
 with DAG("bix_dag",
-         start_date=datetime(2024,4,26),
+         start_date=datetime(2024,4,27),
          schedule_interval="0 14 * * *",
          catchup=False,
          default_args={
