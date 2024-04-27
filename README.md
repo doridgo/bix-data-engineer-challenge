@@ -42,3 +42,8 @@ Esta função tem o objetivo de carregar a tabela que foi resultado da junção 
 Utilizo **boto3** para ler o arquivo csv das tabelas unidas e **pandas_gbq** para carregar para o Big Query.
 
 Nas configurações da DAG, estabeleço que as funções de **extração** ocorram simultaneamente, depois ocorra a junção e a carga. Ela está configurada para rodar todos os dias, às 11 horas da manhã (horário de Brasília).
+
+Por fim, desenvolvi também um dashboard no Power BI compilando os dados neste link: https://app.powerbi.com/view?r=eyJrIjoiZjAzMzI5MjctNGZhYi00YTA0LTg2NjAtMzZlYzBkYWI2ZTA4IiwidCI6IjllZTg0YzAyLTRmOGItNDlhNS1hMTk1LTUyYjhhZDFjZWVkMyJ9
+
+![image](https://github.com/doridgo/bix-data-engineer-challenge/assets/69277343/19cf6b86-7056-4ac1-a381-dbbde1106261)
+
