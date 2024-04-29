@@ -1,4 +1,4 @@
-# Desafio Técnico para a Engenheiro de Dados Bix 
+# Desafio Técnico Engenharia de Dados Bix 
 
 O desafio consiste na extração de dados de três fontes, junção num data warehouse e orquestração do processo. As fontes são:
 
